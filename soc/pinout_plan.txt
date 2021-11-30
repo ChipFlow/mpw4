@@ -1,0 +1,41 @@
+0     clk
+1     rstn
+2     flash_clk
+3     flash_csn
+4     flash_d0
+5     flash_d1
+6     flash_d2
+7     flash_d3
+8     ram_clk
+9     ram_csn
+10    ram_rwds
+11    ram_d0
+12    ram_d1
+13    ram_d2
+14    ram_d3
+15    ram_d4
+16    ram_d5
+17    ram_d6
+18    ram_d7
+19    gpio_0
+20    gpio_1
+21    gpio_2
+22    gpio_3
+23    gpio_4
+24    gpio_5
+25    gpio_6
+26    gpio_7
+27    uart_tx
+28    uart_rx
+29    heartbeat_0
+30    heartbeat_1
+31    rst_inv_out
+32    rst_sync_out
+33    unalloc_0
+34    unalloc_1
+35    unalloc_2
+36    unalloc_3
+37    unalloc_4
+
+
+
