@@ -1,8 +1,8 @@
 import argparse, subprocess, sys
 from pathlib import Path
 
-from nmigen import *
-from nmigen.back import verilog
+from amaranth import *
+from amaranth.back import verilog
 from .test_soc import SoCWrapper
 
 class FPGATop(Elaboratable):

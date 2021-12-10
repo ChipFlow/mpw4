@@ -1,8 +1,8 @@
 import argparse
 import importlib
 
-from nmigen import *
-from thirdparty.nmigen_soc import wishbone
+from amaranth import *
+from thirdparty.amaranth_soc import wishbone
 
 from thirdparty.lambdasoc.cpu.minerva import MinervaCPU
 from thirdparty.lambdasoc.periph.intc import GenericInterruptController
@@ -189,5 +189,5 @@ class SoCWrapper(Elaboratable):
 
 if __name__ == "__main__":
     wrapper = SoCWrapper()
-    from nmigen.cli import main
+    from amaranth.cli import main
     main(wrapper, name="soc_wrapper", ports=[wrapper.io_in, wrapper.io_out, wrapper.io_oeb])
