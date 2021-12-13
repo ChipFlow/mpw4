@@ -20,12 +20,12 @@ class Sky130Top(Elaboratable):
         m.submodules.soc = soc
         for i in range(38):
             # Prevent identical signals being merged using an explicit buffer
-            m.submodules += Instance("buf_x2",
+            m.submodules += Instance("buf_x1",
                 i_i=soc.io_oeb[i],
                 o_q=self.io_oeb[i],
                 a_keep=True
             )
-            m.submodules += Instance("buf_x2",
+            m.submodules += Instance("buf_x1",
                 i_i=soc.io_out[i],
                 o_q=self.io_out[i],
                 a_keep=True
@@ -51,7 +51,7 @@ def main():
         top_verilog = Path(args.build_dir) / "top.v"
         spimem_verilog = Path(__file__).parent.parent / "cores" / "spimemio.v"
         abc_constr = Path(__file__).parent.parent / "soc" / "abc.constr"
-        liberty = Path(__file__).parent.parent / "thirdparty/open_pdk/C4M.Sky130/libs.ref/FlexLib/liberty/FlexLib_slow.lib"
+        liberty = Path(__file__).parent.parent / "thirdparty/open_pdk/C4M.Sky130/libs.ref/StdCellLib/liberty/StdCellLib_slow.lib"
 
         with open(top_verilog, "w") as f:
             f.write(output)
