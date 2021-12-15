@@ -16,7 +16,7 @@ from cores.spimemio_wrapper import SPIMemIO
 from cores.hyperram import HyperRAM
 
 class HyperRamSoC(CPUSoC, Elaboratable):
-    def __init__(self, *, reset_addr, clk_freq,
+    def __init__(self, *, small, reset_addr, clk_freq,
                  rom_addr, flash_ctrl_addr, flash_pins,
                  hram_addr, hyperram_pins,
                  sram_addr, sram_size,
@@ -26,7 +26,7 @@ class HyperRamSoC(CPUSoC, Elaboratable):
         self._arbiter = wishbone.Arbiter(addr_width=30, data_width=32, granularity=8)
         self._decoder = wishbone.Decoder(addr_width=30, data_width=32, granularity=8)
 
-        self.cpu = MinervaCPU(reset_address=reset_addr, with_muldiv=True)
+        self.cpu = MinervaCPU(reset_address=reset_addr, with_muldiv=(not small))
         self._arbiter.add(self.cpu.ibus)
         self._arbiter.add(self.cpu.dbus)
 
@@ -103,9 +103,10 @@ class UARTPins():
 
 
 class SoCWrapper(Elaboratable):
-    def __init__(self, build_dir="build", with_bios=True):
+    def __init__(self, build_dir="build", small=False, with_bios=True):
         io_count = 38
         self.build_dir = build_dir
+        self.small = small
         self.with_bios = with_bios
         self.io_in = Signal(io_count)
         self.io_out = Signal(io_count)
@@ -157,10 +158,10 @@ class SoCWrapper(Elaboratable):
 
         # The SoC itself
         m.submodules.soc = HyperRamSoC(
-            reset_addr=0x00100000, clk_freq=int(27e6),
+            reset_addr=0x00100000, clk_freq=int(27e6), small=self.small,
             rom_addr=0x00000000, flash_ctrl_addr=0x10007000, flash_pins=resource_pins("flash_"),
             hram_addr=0x20000000, hyperram_pins=resource_pins("ram_"),
-            sram_addr=0x10004000, sram_size=0x200,
+            sram_addr=0x10004000, sram_size=(0x40 if self.small else 0x200),
             uart_addr=0x10005000, uart_divisor=int(27e6 // 9600), uart_pins=uart_pins,
             timer_addr=0x10006000, timer_width=32,
             gpio_addr=0x10008000, gpio_count=8, gpio_pins=resource_pins("gpio_"),

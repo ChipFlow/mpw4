@@ -6,9 +6,10 @@ from amaranth.back import verilog
 from .test_soc import SoCWrapper
 
 class Sky130Top(Elaboratable):
-    def __init__(self, build_dir, with_bios=False):
+    def __init__(self, build_dir, small=False, with_bios=False):
         self.build_dir = build_dir
         self.with_bios = with_bios
+        self.small = small
         self.io_out = Signal(38)
         self.io_oeb = Signal(38)
         self.io_in = Signal(38)
@@ -16,7 +17,7 @@ class Sky130Top(Elaboratable):
 
     def elaborate(self, platform):
         m = Module()
-        soc = SoCWrapper(self.build_dir, with_bios=self.with_bios)
+        soc = SoCWrapper(self.build_dir, small=self.small, with_bios=self.with_bios)
         m.submodules.soc = soc
         for i in range(38):
             # Prevent identical signals being merged using an explicit buffer
@@ -92,7 +93,10 @@ def do_pnr(args):
     conf.bColumns            = 2
     conf.bRows               = 2
     conf.chipName            = 'chip'
-    conf.coreSize            = ( u( 240*10.0), u( 320*10.0) )
+    if args.small:
+        conf.coreSize            = ( u( 160*10.0), u( 160*10.0) )
+    else:
+        conf.coreSize            = ( u( 240*10.0), u( 320*10.0) )
     conf.useHTree( 'io_in_from_pad(0)', Spares.HEAVY_LEAF_LOAD )
 
     coreToChip = CoreToChip( conf )
@@ -106,6 +110,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--build-dir', default='./build/sky130')
     parser.add_argument('--with-bios', action='store_true')
+    parser.add_argument('--small', action='store_true')
     parser.add_argument('--synth', action='store_true')
     parser.add_argument('--pnr', action='store_true')
     args = parser.parse_args(sys.argv[1:])
@@ -113,7 +118,7 @@ def main():
     Path(args.build_dir).mkdir(parents=True, exist_ok=True)
 
     if args.synth:
-        top = Sky130Top(args.build_dir, with_bios=args.with_bios)
+        top = Sky130Top(args.build_dir, small=args.small, with_bios=args.with_bios)
         output = verilog.convert(top, name="user_project_core_lambdasoc", ports=top.ports)
 
         top_verilog = Path(args.build_dir) / "top.v"
