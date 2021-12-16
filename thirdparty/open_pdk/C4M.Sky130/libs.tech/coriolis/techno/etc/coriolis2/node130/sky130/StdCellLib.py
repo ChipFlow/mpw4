@@ -98,6 +98,7 @@ def _routing():
         cfg.etesian.uniformDensity = True
         cfg.etesian.routingDriven = False
         cfg.etesian.latchUpDistance = u(30.0 - 1.0)
+        cfg.etesian.diodeName = 'diode_w1'
         cfg.etesian.antennaInsertThreshold = 0.50
         cfg.etesian.antennaMaxWL = u(250.0)
         cfg.etesian.feedNames = 'tie,decap_w0'
