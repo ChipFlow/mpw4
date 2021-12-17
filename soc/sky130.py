@@ -34,6 +34,10 @@ class Sky130Top(Elaboratable):
         m.d.comb += soc.io_in.eq(self.io_in)
         return m
 
+def do_fixup(args):
+    # TODO: make this importable
+    script = str(Path(__file__).parent.parent / "thirdparty/open_pdk/C4M.Sky130/libs.tech/klayout/bin/conv_c4msky130_to_sky130.py")
+    subprocess.run(["python3", script,  "user_project_wrapper.gds", "user_project_wrapper_fixedup.gds"], check=True)
 
 def do_pnr(args):
     os.chdir(args.build_dir)
@@ -105,6 +109,7 @@ def do_pnr(args):
     chipBuilder.doChipFloorplan()
     chipBuilder.doPnR()
     chipBuilder.save()
+    do_fixup(args)
 
 def main():
     parser = argparse.ArgumentParser()
