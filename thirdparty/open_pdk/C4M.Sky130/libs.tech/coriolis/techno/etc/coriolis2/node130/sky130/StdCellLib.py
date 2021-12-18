@@ -31,39 +31,39 @@ def _routing():
     via = tech.getLayer('li_mcon_m1')
     setEnclosures(via, metal, (u(0.0), u(0.0)))
     rg.addLayerGauge(CRL.RoutingLayerGauge.create(
-        metal, CRL.RoutingLayerGauge.Horizontal, CRL.RoutingLayerGauge.PinOnly, 0, 0.0,
-        u(0.0), u(0.51), u(0.17), u(0.17), u(0.17), u(0.17),
+        metal, CRL.RoutingLayerGauge.Vertical, CRL.RoutingLayerGauge.PinOnly, 0, 0.0,
+        u(0.0), u(0.5), u(0.33), u(0.17), u(0.17), u(0.17),
     ))
     metal = tech.getLayer('m1')
     via = tech.getLayer('li_mcon_m1')
-    setEnclosures(via, metal, (u(0.03), u(0.06)))
+    setEnclosures(via, metal, (u(0.03), u(0.075)))
     via = tech.getLayer('m1_via_m2')
-    setEnclosures(via, metal, (u(0.055), u(0.085)))
+    setEnclosures(via, metal, (u(0.09), u(0.085)))
     rg.addLayerGauge(CRL.RoutingLayerGauge.create(
         metal, CRL.RoutingLayerGauge.Horizontal, CRL.RoutingLayerGauge.Default, 1, 0.0,
         u(0.0), u(0.46), u(0.32), u(0.23), u(0.15), u(0.14),
     ))
     metal = tech.getLayer('m2')
     via = tech.getLayer('m1_via_m2')
-    setEnclosures(via, metal, (u(0.085), u(0.055)))
+    setEnclosures(via, metal, (u(0.11), u(0.085)))
     via = tech.getLayer('m2_via2_m3')
-    setEnclosures(via, metal, (u(0.085), u(0.04)))
+    setEnclosures(via, metal, (u(0.085), u(0.085)))
     rg.addLayerGauge(CRL.RoutingLayerGauge.create(
         metal, CRL.RoutingLayerGauge.Vertical, CRL.RoutingLayerGauge.Default, 2, 0.0,
         u(0.0), u(0.51), u(0.37), u(0.26), u(0.2), u(0.14),
     ))
     metal = tech.getLayer('m3')
     via = tech.getLayer('m2_via2_m3')
-    setEnclosures(via, metal, (u(0.065), u(0.065)))
+    setEnclosures(via, metal, (u(0.065), u(0.09)))
     via = tech.getLayer('m3_via3_m4')
-    setEnclosures(via, metal, (u(0.06), u(0.09)))
+    setEnclosures(via, metal, (u(0.09), u(0.09)))
     rg.addLayerGauge(CRL.RoutingLayerGauge.create(
         metal, CRL.RoutingLayerGauge.Horizontal, CRL.RoutingLayerGauge.Default, 3, 0.0,
         u(0.0), u(0.68), u(0.38), u(0.33), u(0.2), u(0.3),
     ))
     metal = tech.getLayer('m4')
     via = tech.getLayer('m3_via3_m4')
-    setEnclosures(via, metal, (u(0.065), u(0.065)))
+    setEnclosures(via, metal, (u(0.49), u(0.065)))
     via = tech.getLayer('m4_via4_m5')
     setEnclosures(via, metal, (u(0.19), u(0.19)))
     rg.addLayerGauge(CRL.RoutingLayerGauge.create(
@@ -74,7 +74,7 @@ def _routing():
     via = tech.getLayer('m4_via4_m5')
     setEnclosures(via, metal, (u(0.31), u(0.31)))
     rg.addLayerGauge(CRL.RoutingLayerGauge.create(
-        metal, CRL.RoutingLayerGauge.Horizontal, CRL.RoutingLayerGauge.Default, 5, 0.0,
+        metal, CRL.RoutingLayerGauge.Horizontal, CRL.RoutingLayerGauge.PowerSupply, 5, 0.0,
         u(0.0), u(3.2), u(1.6), u(1.6), u(0.8), u(1.6),
     ))
     af.addRoutingGauge(rg)
@@ -98,12 +98,14 @@ def _routing():
         cfg.etesian.uniformDensity = True
         cfg.etesian.routingDriven = False
         cfg.etesian.latchUpDistance = u(30.0 - 1.0)
-        cfg.etesian.diodeName = 'diode_w1'
         cfg.etesian.antennaInsertThreshold = 0.50
-        cfg.etesian.antennaMaxWL = u(250.0)
+        cfg.etesian.antennaGateMaxWL = u(250.0)
+        cfg.etesian.antennaDiodeMaxWL = u(550.0)
+       #cfg.etesian.tieName = 'tie'
         cfg.etesian.feedNames = 'tie,decap_w0'
         cfg.etesian.cell.zero = 'zero_x1'
         cfg.etesian.cell.one = 'one_x1'
+        cfg.etesian.diodeName = 'diode_w1'
         cfg.etesian.bloat = 'disabled'
         cfg.etesian.effort = 2
         cfg.etesian.effort = (
