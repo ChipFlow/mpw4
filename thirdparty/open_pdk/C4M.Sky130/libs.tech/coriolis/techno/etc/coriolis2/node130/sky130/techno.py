@@ -61,7 +61,7 @@ analogTechnologyTable = (
     ('minWidth', 'licon', 0.17, Length, ''),
     ('maxWidth', 'licon', 0.17, Length, ''),
     ('minSpacing', 'licon', 0.17, Length, ''),
-    ('minEnclosure', 'difftap', 'licon', (0.04, 0.06), Length|Asymmetric, ''),
+    ('minEnclosure', 'difftap', 'licon', (0.04, 0.12), Length|Asymmetric, ''),
     ('minEnclosure', 'poly', 'licon', (0.05, 0.08), Length|Asymmetric, ''),
     ('minEnclosure', 'li', 'licon', (0.0, 0.08), Length|Asymmetric, ''),
     ('minWidth', 'mcon', 0.17, Length, ''),
@@ -116,22 +116,22 @@ analogTechnologyTable = (
     ('minWidth', 'pad', 40.0, Length, ''),
     ('minSpacing', 'pad', 1.27, Length, ''),
     ('minEnclosure', 'm5', 'pad', 1.0, Length|Asymmetric, ''),
-    # ('minWidth', 'active_res', 0.15, Length, ''),
-    # ('minSpacing', 'active_res', 0.27, Length, ''),
-    # ('minEnclosure', 'diffres', 'difftap', 0.005, Length|Asymmetric, ''),
     # ('minWidth', 'poly_res', 0.15, Length, ''),
     # ('minSpacing', 'poly_res', 0.21, Length, ''),
     # ('minEnclosure', 'polyres', 'poly', 0.005, Length|Asymmetric, ''),
-    # ('minWidth', 'ndiode', 0.15, Length, ''),
-    # ('minSpacing', 'ndiode', 0.27, Length, ''),
-    # ('minEnclosure', 'areaid_diode', 'difftap', 0.005, Length|Asymmetric, ''),
+    # ('minWidth', 'active_res', 0.15, Length, ''),
+    # ('minSpacing', 'active_res', 0.27, Length, ''),
+    # ('minEnclosure', 'diffres', 'difftap', 0.005, Length|Asymmetric, ''),
     # ('minWidth', 'pdiode', 0.15, Length, ''),
     # ('minSpacing', 'pdiode', 0.27, Length, ''),
     # ('minEnclosure', 'areaid_diode', 'difftap', 0.005, Length|Asymmetric, ''),
+    # ('minWidth', 'ndiode', 0.15, Length, ''),
+    # ('minSpacing', 'ndiode', 0.27, Length, ''),
+    # ('minEnclosure', 'areaid_diode', 'difftap', 0.005, Length|Asymmetric, ''),
+    ('minSpacing', 'difftap', 'poly', 0.075, Length|Asymmetric, ''),
+    ('minSpacing', 'licon', 'difftap', 0.19, Length|Asymmetric, ''),
     ('minSpacing', 'difftap', 'hvi', 0.18, Length|Asymmetric, ''),
-    ('minSpacing', 'difftap', 'poly', 0.05, Length|Asymmetric, ''),
     ('minSpacing', 'difftap', 'nwm', 0.34, Length|Asymmetric, ''),
-    ('minSpacing', 'intersect(licon,poly)', 'poly', 0.19, Length|Asymmetric, ''),
 )
 
 def _setup_techno():
@@ -323,16 +323,16 @@ def _setup_techno():
         size=u(40.0), spacing=u(1.27), gds2Layer=76, gds2DataType=20,
     )
     createBL(
-        tech, 'areaid_diode', BasicLayer.Material.other,
-        gds2Layer=81, gds2DataType=23,
+        tech, 'polyres', BasicLayer.Material.other,
+        gds2Layer=66, gds2DataType=13,
     )
     createBL(
         tech, 'diffres', BasicLayer.Material.other,
         gds2Layer=65, gds2DataType=13,
     )
     createBL(
-        tech, 'polyres', BasicLayer.Material.other,
-        gds2Layer=66, gds2DataType=13,
+        tech, 'areaid_diode', BasicLayer.Material.other,
+        gds2Layer=81, gds2DataType=23,
     )
 
     # ViaLayers
@@ -430,8 +430,8 @@ def _setup_techno():
     )
 
     # Resistors
-    # ResistorLayer.create(tech, 'active_res', 'difftap', 'diffres')
     # ResistorLayer.create(tech, 'poly_res', 'poly', 'polyres')
+    # ResistorLayer.create(tech, 'active_res', 'difftap', 'diffres')
 
     # Transistors
     # GateLayer.create(tech, 'hvmosgate', 'difftap', 'poly', 'hvi')
