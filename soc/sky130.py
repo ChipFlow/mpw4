@@ -3,7 +3,7 @@ from pathlib import Path
 
 from amaranth import *
 from amaranth.back import verilog
-from .test_soc import SoCWrapper
+from test_soc import SoCWrapper
 
 class Sky130Top(Elaboratable):
     def __init__(self, build_dir, small=False, with_bios=False):
