@@ -86,6 +86,7 @@ def do_pnr(args):
     conf.cfg.katana.trackFill            = 0
     conf.cfg.katana.runRealignStage      = True
     conf.cfg.katana.dumpMeasures         = True
+    conf.cfg.katana.longWireUpReserve1   = 2.0
     conf.cfg.block.spareSide             = u(7*10)
     conf.cfg.chip.minPadSpacing          = u(1.46)
     conf.cfg.chip.supplyRailWidth        = u(20.0)
