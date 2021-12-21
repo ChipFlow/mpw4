@@ -79,10 +79,10 @@ def do_pnr(args):
     conf.cfg.anabatic.searchHalo         = 2
     conf.cfg.anabatic.globalIterations   = 20
     conf.cfg.anabatic.topRoutingLayer    = 'm4'
-    conf.cfg.katana.hTracksReservedLocal = 11
-    conf.cfg.katana.vTracksReservedLocal = 10
-    conf.cfg.katana.hTracksReservedMin   = 7
-    conf.cfg.katana.vTracksReservedMin   = 5
+    conf.cfg.katana.hTracksReservedLocal = 25
+    conf.cfg.katana.vTracksReservedLocal = 20
+    conf.cfg.katana.hTracksReservedMin   = 12
+    conf.cfg.katana.vTracksReservedMin   = 10
     conf.cfg.katana.trackFill            = 0
     conf.cfg.katana.runRealignStage      = True
     conf.cfg.katana.dumpMeasures         = True
