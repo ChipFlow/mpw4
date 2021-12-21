@@ -1,0 +1,148 @@
+name: Flow CI test
+
+on: [push, pull_request]
+
+jobs:
+  Build-yosys:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install
+      run: |
+        sudo apt-get update
+        sudo apt-get install git make cmake libboost-all-dev python3-dev libeigen3-dev tcl-dev clang bison flex swig
+
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+
+    - name: Get yosys
+      run: |
+        git clone https://github.com/YosysHQ/yosys.git
+        cd yosys
+        echo "YOSYS_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+    - name: Cache yosys installation
+      uses: actions/cache@v2
+      id: cache-yosys
+      with:
+        path: .yosys
+        key: cache-yosys-${{ env.YOSYS_SHA }}
+
+    - name: Build yosys
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        source ./.github/ci/build_deps.sh
+        build_yosys
+      if: steps.cache-yosys.outputs.cache-hit != 'true'
+
+  Build-coriolis:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install
+      run: |
+        sudo apt-get update
+        sudo apt-get install git make cmake libboost-all-dev python3-dev libeigen3-dev tcl-dev clang bison flex swig qt5-default python3-pyqt5 libqt5svg5-dev qttools5-dev rapidjson-dev libqwt-qt5-dev
+
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+
+    - name: Get coriolis
+      run: |
+        cd $HOME
+        mkdir -p ./coriolis-2.x/src/support
+        cd ./coriolis-2.x/src/support
+        git clone https://github.com/miloyip/rapidjson
+        cd ..
+        git clone https://gitlab.lip6.fr/vlsi-eda/coriolis
+        cd coriolis
+        echo "CORIOLIS_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+    - name: Cache coriolis installation
+      uses: actions/cache@v2
+      id: cache-coriolis
+      with:
+        path: /home/runner/coriolis-2.x/Linux.x86_64/Release.Shared/install
+        key: cache-coriolis-v2-${{ env.CORIOLIS_SHA }}
+
+    - name: Build coriolis
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        source ./.github/ci/build_deps.sh
+        build_coriolis
+      if: steps.cache-coriolis.outputs.cache-hit != 'true'
+
+  Build-soc:
+    runs-on: ubuntu-latest
+    needs: [Build-yosys, Build-coriolis]
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install
+      run: |
+        sudo apt-get update
+        sudo apt-get install git make cmake libboost-all-dev python3-dev libeigen3-dev tcl-dev clang bison flex swig qt5-default python3-pyqt5 pyqt5-dev-tools libqt5svg5-dev qttools5-dev rapidjson-dev libqwt-qt5-dev tree
+
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+
+    - name: Get yosys
+      run: |
+        git clone https://github.com/YosysHQ/yosys.git
+        cd yosys
+        echo "YOSYS_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+    - name: Cache yosys installation
+      uses: actions/cache@v2
+      id: cache-yosys
+      with:
+        path: .yosys
+        key: cache-yosys-${{ env.YOSYS_SHA }}
+
+    - name: Build yosys
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        source ./.github/ci/build_deps.sh
+        build_yosys
+      if: steps.cache-yosys.outputs.cache-hit != 'true'
+
+    - name: Get coriolis
+      run: |
+        cd $HOME
+        mkdir -p ./coriolis-2.x/src/support
+        cd ./coriolis-2.x/src/support
+        git clone https://github.com/miloyip/rapidjson
+        cd ..
+        git clone https://gitlab.lip6.fr/vlsi-eda/coriolis
+        cd coriolis
+        echo "CORIOLIS_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+    - name: Cache coriolis installation
+      uses: actions/cache@v2
+      id: cache-coriolis
+      with:
+        path: /home/runner/coriolis-2.x/Linux.x86_64/Release.Shared/install
+        key: cache-coriolis-v2-${{ env.CORIOLIS_SHA }}
+
+    - name: Build coriolis
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        source ./.github/ci/build_deps.sh
+        build_coriolis
+      if: steps.cache-coriolis.outputs.cache-hit != 'true'
+
+    - name: Build SoC
+      run: |
+        source ./.github/ci/build_soc.sh
+        install_pydeps && do_build
