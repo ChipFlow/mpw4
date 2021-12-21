@@ -1,0 +1,6 @@
+read_json build/sky130/user_project_core_lambdasoc.json
+rename user_project_core_lambdasoc user_project_core_lambdasoc_cts
+add -input vccd1 1
+add -input vssd1 1
+write_verilog -norename ../caravel_user_project_mpw4/verilog/gl/user_project_core_lambdasoc.v
+
