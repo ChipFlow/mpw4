@@ -7,7 +7,7 @@
 /*  argv:                                                               */
 /*                                                                      */
 /*  User: verhaegs                                                      */
-/*  Generation date Fri Dec 10 15:33:09 2021                            */
+/*  Generation date Wed Dec 22 09:42:06 2021                            */
 /*                                                                      */
 /*  liberty data flow `StdCellLib_nom`                                  */
 /*                                                                      */
@@ -18,7 +18,7 @@
 library (StdCellLib_nom) {
 
     technology (cmos) ;
-    date                          : "Fri Dec 10 15:33:09 2021" ;
+    date                          : "Wed Dec 22 09:42:06 2021" ;
     delay_model                   : table_lookup ;
     nom_voltage                   : 1.80 ;
     nom_temperature               : 25.0 ;
