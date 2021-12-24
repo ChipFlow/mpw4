@@ -101,7 +101,7 @@ def do_pnr(args):
     if args.small:
         conf.coreSize            = ( u( 160*10.0), u( 160*10.0) )
     else:
-        conf.coreSize            = ( u( 240*10.0), u( 320*10.0) )
+        conf.coreSize            = ( u( 240*10.0), u( 300*10.0) )
     conf.useHTree( 'io_in_from_pad(0)', Spares.HEAVY_LEAF_LOAD )
 
     coreToChip = CoreToChip( conf )
