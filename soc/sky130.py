@@ -76,6 +76,7 @@ def do_pnr(args):
     conf.cfg.etesian.spaceMargin         = 0.10
     conf.cfg.etesian.antennaGateMaxWL = u(400.0)
     conf.cfg.etesian.antennaDiodeMaxWL = u(800.0)
+    conf.cfg.etesian.feedNames = 'tie_diff'
     conf.cfg.anabatic.searchHalo         = 2
     conf.cfg.anabatic.globalIterations   = 20
     conf.cfg.anabatic.topRoutingLayer    = 'm4'
@@ -86,7 +87,7 @@ def do_pnr(args):
     conf.cfg.katana.trackFill            = 0
     conf.cfg.katana.runRealignStage      = True
     conf.cfg.katana.dumpMeasures         = True
-    conf.cfg.katana.longWireUpReserve1   = 2.0
+    conf.cfg.katana.longWireUpReserve1   = 3.0
     conf.cfg.block.spareSide             = u(7*10)
     conf.cfg.chip.minPadSpacing          = u(1.46)
     conf.cfg.chip.supplyRailWidth        = u(20.0)
@@ -101,7 +102,7 @@ def do_pnr(args):
     if args.small:
         conf.coreSize            = ( u( 160*10.0), u( 160*10.0) )
     else:
-        conf.coreSize            = ( u( 240*10.0), u( 300*10.0) )
+        conf.coreSize            = ( u( 210*10.0), u( 210*10.0) )
     conf.useHTree( 'io_in_from_pad(0)', Spares.HEAVY_LEAF_LOAD )
 
     coreToChip = CoreToChip( conf )
@@ -135,13 +136,15 @@ def main():
         with open(top_verilog, "w") as f:
             f.write(output)
 
+        target_delay = 20000 # 50MHz
+        max_fanout = 64
         synth_script = f"""
 read_liberty -lib {liberty}
 read_verilog {top_verilog} {spimem_verilog}
 synth -flatten -top user_project_core_lambdasoc
 dfflibmap -liberty {liberty}
 opt
-abc -D 200000 -constr {abc_constr} -liberty {liberty}
+abc -script +strash;ifraig;scorr;dc2;dretime;strash;&get,-n;&dch,-f;&nf,-D,{target_delay};&put;buffer,-G,1000,-N,{max_fanout};upsize,-D,{target_delay};dnsize,-D,{target_delay};stime,-p -constr {abc_constr} -liberty {liberty}
 setundef -zero
 clean -purge
 write_blif {args.build_dir}/user_project_core_lambdasoc.blif
