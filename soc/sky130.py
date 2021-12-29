@@ -76,7 +76,7 @@ def do_pnr(args):
     conf.cfg.etesian.spaceMargin         = 0.10
     conf.cfg.etesian.antennaGateMaxWL = u(400.0)
     conf.cfg.etesian.antennaDiodeMaxWL = u(800.0)
-    conf.cfg.etesian.feedNames = 'tie_diff'
+    conf.cfg.etesian.feedNames = 'tie_diff,tie_diff_x2'
     conf.cfg.anabatic.searchHalo         = 2
     conf.cfg.anabatic.globalIterations   = 20
     conf.cfg.anabatic.topRoutingLayer    = 'm4'

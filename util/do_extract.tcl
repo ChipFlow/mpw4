@@ -1,6 +1,6 @@
 drc off
 
-gds read build/sky130/user_project_wrapper_decap.gds
+gds read build/sky130/user_project_wrapper_fixedup.gds
 
 cd build/sky130
 shell mkdir -p extracted
