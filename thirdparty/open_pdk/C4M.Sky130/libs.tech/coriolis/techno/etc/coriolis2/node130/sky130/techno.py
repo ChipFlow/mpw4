@@ -33,19 +33,19 @@ analogTechnologyTable = (
     ('minArea', 'psdm', 0.265, Area, ''),
     ('minWidth', 'hvi', 0.6, Length, ''),
     ('minSpacing', 'hvi', 0.7, Length, ''),
+    ('minWidth', 'poly', 0.15, Length, ''),
+    ('minSpacing', 'poly', 0.21, Length, ''),
     ('minWidth', 'difftap', 0.15, Length, ''),
     ('minSpacing', 'difftap', 0.27, Length, ''),
     ('minEnclosure', 'nwm', 'difftap', 0.18, Length|Asymmetric, ''),
     ('minSpacing', 'nwm', 'difftap',  0.34, Length|Asymmetric, ''),
     # TODO for difftap:
     #    allow_in_substrate, implant_abut, allow_contactless_implant, allow_well_crossing
-    ('minWidth', 'poly', 0.15, Length, ''),
-    ('minSpacing', 'poly', 0.21, Length, ''),
     ('minWidth', 'li', 0.17, Length, ''),
     ('minSpacing', 'li', 0.17, Length, ''),
     ('minWidth', 'm1', 0.14, Length, ''),
     ('minSpacing', 'm1', 0.14, Length, ''),
-    ('minArea', 'm1', 0.0676, Area, ''),
+    ('minArea', 'm1', 0.083, Area, ''),
     ('minWidth', 'm2', 0.14, Length, ''),
     ('minSpacing', 'm2', 0.14, Length, ''),
     ('minArea', 'm2', 0.0676, Area, ''),
@@ -96,10 +96,11 @@ analogTechnologyTable = (
     ('minSpacing', 'lvtn', 0.38, Length, ''),
     ('minArea', 'lvtn', 0.265, Area, ''),
     # ('minTransistorL', 'hvmosgate', 0.5, Length, ''),
-    # ('minTransistorW', 'hvmosgate', 0.29, Length, ''),
+    # ('minTransistorW', 'hvmosgate', 0.42, Length, ''),
     # ('minGateExtension', 'difftap', 'hvmosgate', 0.25, Length|Asymmetric, ''),
     # ('minGateExtension', 'poly', 'hvmosgate', 0.13, Length|Asymmetric, ''),
     # ('minGateSpacing', 'licon', 'hvmosgate', 0.055, Length|Asymmetric, ''),
+    # ('minTransistorW', 'mosgate', 0.42, Length, ''),
     # ('minGateExtension', 'difftap', 'mosgate', 0.25, Length|Asymmetric, ''),
     # ('minGateExtension', 'poly', 'mosgate', 0.13, Length|Asymmetric, ''),
     # ('minGateSpacing', 'licon', 'mosgate', 0.055, Length|Asymmetric, ''),
@@ -116,22 +117,22 @@ analogTechnologyTable = (
     ('minWidth', 'pad', 40.0, Length, ''),
     ('minSpacing', 'pad', 1.27, Length, ''),
     ('minEnclosure', 'm5', 'pad', 1.0, Length|Asymmetric, ''),
-    # ('minWidth', 'poly_res', 0.15, Length, ''),
-    # ('minSpacing', 'poly_res', 0.21, Length, ''),
-    # ('minEnclosure', 'polyres', 'poly', 0.005, Length|Asymmetric, ''),
-    # ('minWidth', 'active_res', 0.15, Length, ''),
+    # ('minWidth', 'active_res', 0.33, Length, ''),
     # ('minSpacing', 'active_res', 0.27, Length, ''),
     # ('minEnclosure', 'diffres', 'difftap', 0.005, Length|Asymmetric, ''),
+    # ('minWidth', 'poly_res', 0.33, Length, ''),
+    # ('minSpacing', 'poly_res', 0.21, Length, ''),
+    # ('minEnclosure', 'polyres', 'poly', 0.005, Length|Asymmetric, ''),
     # ('minWidth', 'pdiode', 0.15, Length, ''),
     # ('minSpacing', 'pdiode', 0.27, Length, ''),
     # ('minEnclosure', 'areaid_diode', 'difftap', 0.005, Length|Asymmetric, ''),
     # ('minWidth', 'ndiode', 0.15, Length, ''),
     # ('minSpacing', 'ndiode', 0.27, Length, ''),
     # ('minEnclosure', 'areaid_diode', 'difftap', 0.005, Length|Asymmetric, ''),
-    ('minSpacing', 'difftap', 'poly', 0.075, Length|Asymmetric, ''),
-    ('minSpacing', 'licon', 'difftap', 0.19, Length|Asymmetric, ''),
     ('minSpacing', 'difftap', 'hvi', 0.18, Length|Asymmetric, ''),
+    ('minSpacing', 'licon', 'difftap', 0.235, Length|Asymmetric, ''),
     ('minSpacing', 'difftap', 'nwm', 0.34, Length|Asymmetric, ''),
+    ('minSpacing', 'difftap', 'poly', 0.075, Length|Asymmetric, ''),
 )
 
 def _setup_techno():
@@ -167,20 +168,20 @@ def _setup_techno():
         gds2Layer=75, gds2DataType=20,
     )
     createBL(
-        tech, 'difftap.pin', BasicLayer.Material.other,
-        gds2Layer=65, gds2DataType=16,
-    )
-    createBL(
-        tech, 'difftap.block', BasicLayer.Material.blockage,
-        gds2Layer=100, gds2DataType=10,
-    )
-    createBL(
         tech, 'poly.pin', BasicLayer.Material.other,
         gds2Layer=66, gds2DataType=16,
     )
     createBL(
         tech, 'poly.block', BasicLayer.Material.blockage,
         gds2Layer=100, gds2DataType=20,
+    )
+    createBL(
+        tech, 'difftap.pin', BasicLayer.Material.other,
+        gds2Layer=65, gds2DataType=16,
+    )
+    createBL(
+        tech, 'difftap.block', BasicLayer.Material.blockage,
+        gds2Layer=100, gds2DataType=10,
     )
     createBL(
         tech, 'li.pin', BasicLayer.Material.other,
@@ -276,7 +277,7 @@ def _setup_techno():
     )
     createBL(
         tech, 'm1', BasicLayer.Material.metal,
-        size=u(0.14), spacing=u(0.14), area=0.0676, gds2Layer=68, gds2DataType=20,
+        size=u(0.14), spacing=u(0.14), area=0.083, gds2Layer=68, gds2DataType=20,
     )
     createBL(
         tech, 'via', BasicLayer.Material.cut,
@@ -323,16 +324,20 @@ def _setup_techno():
         size=u(40.0), spacing=u(1.27), gds2Layer=76, gds2DataType=20,
     )
     createBL(
-        tech, 'polyres', BasicLayer.Material.other,
-        gds2Layer=66, gds2DataType=13,
-    )
-    createBL(
         tech, 'diffres', BasicLayer.Material.other,
         gds2Layer=65, gds2DataType=13,
     )
     createBL(
         tech, 'areaid_diode', BasicLayer.Material.other,
         gds2Layer=81, gds2DataType=23,
+    )
+    createBL(
+        tech, 'polyres', BasicLayer.Material.other,
+        gds2Layer=66, gds2DataType=13,
+    )
+    createBL(
+        tech, 'prBoundary', BasicLayer.Material.other,
+        gds2Layer=235, gds2DataType=4,
     )
 
     # ViaLayers
@@ -363,11 +368,11 @@ def _setup_techno():
     )
 
     # Blockages
-    tech.getLayer('difftap').setBlockageLayer(
-        tech.getLayer('difftap.block')
-    )
     tech.getLayer('poly').setBlockageLayer(
         tech.getLayer('poly.block')
+    )
+    tech.getLayer('difftap').setBlockageLayer(
+        tech.getLayer('difftap.block')
     )
     tech.getLayer('li').setBlockageLayer(
         tech.getLayer('li.block')
@@ -430,8 +435,8 @@ def _setup_techno():
     )
 
     # Resistors
-    # ResistorLayer.create(tech, 'poly_res', 'poly', 'polyres')
     # ResistorLayer.create(tech, 'active_res', 'difftap', 'diffres')
+    # ResistorLayer.create(tech, 'poly_res', 'poly', 'polyres')
 
     # Transistors
     # GateLayer.create(tech, 'hvmosgate', 'difftap', 'poly', 'hvi')
@@ -507,8 +512,8 @@ def _setup_display():
     style.addDrawingStyle(group='Cuts (VIA holes', name='pad', color=toRGB('Red'), threshold=threshold)
 
     # Blockages.
-    style.addDrawingStyle(group='Blockages', name='difftap.block', color=toRGB('Blue'), pattern=toHexa('slash.8'), border=4, threshold=threshold)
-    style.addDrawingStyle(group='Blockages', name='poly.block', color=toRGB('Aqua'), pattern=toHexa('poids4.8'), border=4, threshold=threshold)
+    style.addDrawingStyle(group='Blockages', name='poly.block', color=toRGB('Blue'), pattern=toHexa('slash.8'), border=4, threshold=threshold)
+    style.addDrawingStyle(group='Blockages', name='difftap.block', color=toRGB('Aqua'), pattern=toHexa('poids4.8'), border=4, threshold=threshold)
     style.addDrawingStyle(group='Blockages', name='li.block', color=toRGB('LightPink'), pattern=toHexa('poids4.8'), border=4, threshold=threshold)
     style.addDrawingStyle(group='Blockages', name='m1.block', color=toRGB('Green'), pattern=toHexa('poids4.8'), border=4, threshold=threshold)
     style.addDrawingStyle(group='Blockages', name='m2.block', color=toRGB('Yellow'), pattern=toHexa('poids4.8'), border=4, threshold=threshold)

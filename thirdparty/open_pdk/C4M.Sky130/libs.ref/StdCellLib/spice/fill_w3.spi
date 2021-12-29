@@ -1,0 +1,4 @@
+* fill_w3
+.subckt fill_w3 vdd vss
+
+.ends fill_w3

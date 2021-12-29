@@ -1,0 +1,4 @@
+* tie_diff_w{i}
+.subckt tie_diff_w{i} vdd vss
+
+.ends tie_diff_w{i}
