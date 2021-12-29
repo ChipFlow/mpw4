@@ -76,7 +76,7 @@ def do_pnr(args):
     conf.cfg.etesian.spaceMargin         = 0.10
     conf.cfg.etesian.antennaGateMaxWL = u(400.0)
     conf.cfg.etesian.antennaDiodeMaxWL = u(800.0)
-    conf.cfg.etesian.feedNames = 'tie_diff'
+    conf.cfg.etesian.feedNames = 'tie_diff,tie_diff_w2'
     conf.cfg.anabatic.searchHalo         = 2
     conf.cfg.anabatic.globalIterations   = 20
     conf.cfg.anabatic.topRoutingLayer    = 'm4'
@@ -102,7 +102,7 @@ def do_pnr(args):
     if args.small:
         conf.coreSize            = ( u( 160*10.0), u( 160*10.0) )
     else:
-        conf.coreSize            = ( u( 210*10.0), u( 210*10.0) )
+        conf.coreSize            = ( u( 230*10.0), u( 235*10.0) )
     conf.useHTree( 'io_in_from_pad(0)', Spares.HEAVY_LEAF_LOAD )
 
     coreToChip = CoreToChip( conf )
