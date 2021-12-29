@@ -1,0 +1,4 @@
+* tie_poly_w{i}
+.subckt tie_poly_w{i} vdd vss
+
+.ends tie_poly_w{i}

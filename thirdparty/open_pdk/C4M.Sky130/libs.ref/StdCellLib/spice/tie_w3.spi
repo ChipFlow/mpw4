@@ -1,0 +1,4 @@
+* tie_w3
+.subckt tie_w3 vdd vss
+
+.ends tie_w3

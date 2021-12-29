@@ -6,7 +6,7 @@
 /*  argv:                                                               */
 /*                                                                      */
 /*  User: verhaegs                                                      */
-/*  Generation date Wed Dec 22 09:42:03 2021                            */
+/*  Generation date Wed Dec 29 11:35:49 2021                            */
 /*                                                                      */
 /*  Verilog data flow description generated from `nand2_x0`             */
 /*                                                                      */
