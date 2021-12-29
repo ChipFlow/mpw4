@@ -17,8 +17,8 @@ def main():
 	xstep = 1.0
 	width = 2
 
-	# Replace 20% of suitable ties with decap
-	ratio = 0.2
+	# Replace 5% of suitable ties with decap
+	ratio = 0.05
 	decaps = []
 	candidates = 0
 	replaced = set()
