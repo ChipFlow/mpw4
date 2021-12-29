@@ -133,6 +133,7 @@ analogTechnologyTable = (
     ('minSpacing', 'licon', 'difftap', 0.235, Length|Asymmetric, ''),
     ('minSpacing', 'difftap', 'nwm', 0.34, Length|Asymmetric, ''),
     ('minSpacing', 'difftap', 'poly', 0.075, Length|Asymmetric, ''),
+    ('minSpacing', 'intersect(difftap,hvi)', 0.3, Length, ''),
 )
 
 def _setup_techno():
