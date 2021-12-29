@@ -6,7 +6,7 @@ def main():
 
 	ties = 0
 	decaps = 0
-	ratio = 0.1
+	ratio = 0.2
 
 	for ref in core.references:
 		if ref.ref_cell.name != "tie_diff_x2":
